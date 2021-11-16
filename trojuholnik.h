@@ -50,6 +50,7 @@ public:
    static void generujPoleBodov(Bod *pole, int n);
    //musis dynamicky alokovat pole
    static void utriedPoleBodov(Bod *pole, int n);
+   static void vypisPoleBodov(int pocetBodov, Bod *poleBodov);
    static int cmp(const void * a, const void * b);
 };
 

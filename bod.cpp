@@ -3,30 +3,7 @@
 //
 #include "trojuholnik.h"
 using namespace alpha;
-/*
-Bod::Bod() {
-    float x;
-    float y;
-    std::cout<<"Zadaj x: ";
-    std::cin>>x;
-    std::cout<<"Zadaj y: ";
-    std::cin>>y;
-    this->x=x;
-    this->y=y;
-}
 
-Bod::Bod(float a) {
-    this->x=a;
-    this->y=a;
-
-}
-
-Bod::Bod(float a, float b) {
-    this->x=a;
-    this->y=b;
-
-}
-*/
 float Bod::getDistance(const Bod &other) const {
 //sqrt((x2-x1)upper2 + (y2-y1)upper2)
 
@@ -94,14 +71,13 @@ void Bod::utriedPoleBodov(Bod *pole, int n) {
 }
 
 int Bod::cmp(const void *a, const void *b) {
-
-    return 0;
+    Bod * A = (Bod *)prvy;
+    Bod * B = (Bod *)druhy;
+    return ((*A)<(*B))?-1:((*A)>(*B))?1:0;
 }
 
 Bod::operator float() const {
-    float x= this->x;
-    float y= this->y;
-    cout<<"[%f;%f]"<<x,y;
+
     return 0;
 }
 
