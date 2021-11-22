@@ -81,4 +81,42 @@ Bod::operator float() const {
     return 0;
 }
 
+void Bod::vypisPoleBodov(int pocetBodov, Bod *poleBodov) {
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+std::ostream &operator<<(std::ostream &os, const Priamka &other) {
+    os<<"Priamka:  "<<other.X<<" "<<other.Y;
+    return os;
+}

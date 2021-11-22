@@ -54,6 +54,24 @@ public:
    static int cmp(const void * a, const void * b);
 };
 
+class Priamka{
+private:
+    Bod X;
+    Bod Y;
+public:
+    //
+    Priamka(){};//Priamka():X({0 , 0}),Y({0,0}){};-funguje bez toho
+    explicit Priamka(Bod Z):X(Z),Y(Z){};
+    Priamka(Bod Z, Bod W):X(Z),Y(W){};
+    friend std::ostream &operator<<(std::ostream &os, const Priamka & other);
+
+
+
+
+
+
+
+};
 
 
 
