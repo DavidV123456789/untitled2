@@ -35,14 +35,15 @@ public:
     Bod(float a,float b):x(a),y(b){};
     float getDistance(const Bod & other = Bod(0,0) ) const;
 
-    getX();
-    getY();
+    float getX();
+    float getY();
 
     Bod getCenter(const Bod & other) const;
     Bod operator+(const Bod & other) const;
     Bod operator-(const Bod & other) const;
     Bod operator/(float k) const;
     Bod operator*(float k) const;
+    float operator*(const Bod & other) const;//skalarny sucin vektorov
     bool operator<(const Bod & other);
     bool operator>(const Bod & other);
     Bod operator^(const Bod & other) const; //pretazeny operator strieska na vypocet stredu usecky
@@ -74,10 +75,10 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Priamka & other);
     Bod getStred() const;
     float  getDlzka() const;
-    Vektor getsmerovy() const;
-    Vektor getNormalovy() const;//kolmý vektor na smerový
+    virtual Vektor getsmerovy() const;
+    virtual Vektor getNormalovy() const;//kolmý vektor na smerový
     Priamka getOsStrany() const;
-
+    float getUhol(const Priamka & other, char vrat='s') const;
 
 
 };
@@ -94,7 +95,16 @@ public:
     friend  std::ostream  & operator<<(std::ostream & os, const PR & other);
     float * getKoeficienty();//vrati pole koeficientov
     void setKoeficienty();//nastavi koeficienty v parametrckej rovnici na spravne hodnoty
-
+    virtual Vektor getsmerovy() const;
 };
 
+//všeobecná rovnica
+class VR: public Priamka{
+private:
+    float koeficienty[3];
+public:
+    VR():koeficienty{0,0,0,0}{};
+    VR(Bod A, Bod B);
+    //dorob...
+};
 #endif //UNTITLED2_TROJUHOLNIK_H

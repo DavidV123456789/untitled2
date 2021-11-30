@@ -197,8 +197,20 @@ float Bod::generujFloat(float min, float max)
     return dis(gen) ;
 }
 
+float Bod::getX() {
+    return 0;
+}
+
+float Bod::getY() {
+    return 0;
+}
+
+float Bod::operator*(const Bod &other) const {
+    return {x*other.x,y*other.y};
+}
+
 std::ostream &operator<<(std::ostream &os, const Priamka &other) {
-    return ;
+    return 0;
 }
 
 Bod Priamka::getStred() const {//refaktorovanie, pri zmene názvu funkcie zmení názov danej funkcie v celom kóde
@@ -216,8 +228,8 @@ Vektor Priamka::getsmerovy() const {
 }
 
 Vektor Priamka::getNormalovy() const {
-    Vektor smerovy = getsmerovy()
-    return { smerovy.getY()*(-1),smerovy.getX };
+    Vektor smerovy = getsmerovy();
+    return { smerovy.getY()*(-1), smerovy.getX() };
     //getery?
 }
 
@@ -225,17 +237,29 @@ Priamka Priamka::getOsStrany() const {
     Bod stred = getStred();
     return {stred, stred+getNormalovy()};
 }
-//Je potrebné optimalozovať program tak aby sa funkcia vyvolávala čo najmenej krát
-PR::PR(Bod A, Bod B) : Priamka(A, B) {
 
+float Priamka::getUhol(const Priamka &other, char vrat) const {
+    //vrat=(other.X*other.Y)/(sqrt(X.getX()+Y.getX())*sqrt(X.getY()+Y.getY());//zle
+
+    return 0;
 }
 
-PR::PR(const Priamka &P) {
+//Je potrebné optimalozovať program tak aby sa funkcia vyvolávala čo najmenej krát
+PR::PR(Bod A, Bod B) : Priamka(A, B) {
+    setKoeficienty();
+}
 
+PR::PR(const Priamka &P):Priamka(P) {
+    setKoeficienty();
 }
 
 void PR::setKoeficienty() {
-
+    Vektor smerovy=Priamka::getsmerovy();//dôvod prečo Priamka:: pred tým getsmerovy je z dôvodu lebo je to virtualna v dedicovi premenena metoda
+    koeficienty[0]=X.getX();
+    koeficienty[1]=smerovy.getX();
+    koeficienty[2]=X.getY();
+    koeficienty[3]=smerovy.getY();
+    //x=a1 + s1 * t     y= a2 + s2 * t
 }
 
 float *PR::getKoeficienty() {
@@ -244,6 +268,16 @@ float *PR::getKoeficienty() {
 
 std::ostream &operator<<(std::ostream &os, const PR &other) {
     cout<<"Parametricka rovnica:"<<std::endl;
-    cout<<"x= "<<other.koeficienty[0]<<"+"<<koeficienty[2]<<"*t"<<std::endl;
-    cout<<"x= "<<koeficienty[1]<<"+"<<koeficienty[3]<<"*t"<<std::endl;
+    cout<<std::showpos<<"x= "<<other.koeficienty[0]<<"+"<<other.koeficienty[2]<<"*t"<<std::noshowpos<<std::endl;
+    cout<<std::showpos<<"y= "<<other.koeficienty[1]<<"+"<<other.koeficienty[3]<<"*t       ;t je z R"<<std::noshowpos<<std::endl;
+    //showpos nám zapričinuje ukazovanie + pred kladnými cislami
+}
+
+Vektor PR::getsmerovy() const {
+    return {koeficienty[1], koeficienty[3]};
+}
+
+
+VR::VR(Bod A, Bod B) : Priamka(A, B) {
+
 }
