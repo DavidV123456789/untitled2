@@ -78,6 +78,7 @@ public:
     virtual Vektor getsmerovy() const;
     virtual Vektor getNormalovy() const;//kolmý vektor na smerový
     Priamka getOsStrany() const;
+    Priamka getOsUhla(const Priamka & other) const;
     float getUhol(const Priamka & other, char vrat='s') const;
 
 
@@ -103,7 +104,7 @@ class VR: public Priamka{
 private:
     float koeficienty[3];
 public:
-    VR():koeficienty{0,0,0,0}{};
+    VR():koeficienty{0,0,0}{};
     VR(Bod A, Bod B);
     //dorob...
 };

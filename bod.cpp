@@ -206,7 +206,9 @@ float Bod::getY() {
 }
 
 float Bod::operator*(const Bod &other) const {
-    return {x*other.x,y*other.y};
+    //nejsom si isty co presne tu ma byt
+    //dorob...
+    return 0;
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka &other) {
@@ -239,9 +241,13 @@ Priamka Priamka::getOsStrany() const {
 }
 
 float Priamka::getUhol(const Priamka &other, char vrat) const {
-    //vrat=(other.X*other.Y)/(sqrt(X.getX()+Y.getX())*sqrt(X.getY()+Y.getY());//zle
+    //dorob...
 
     return 0;
+}
+
+Priamka Priamka::getOsUhla(const Priamka &other) const {
+    return Priamka();
 }
 
 //Je potrebné optimalozovať program tak aby sa funkcia vyvolávala čo najmenej krát
