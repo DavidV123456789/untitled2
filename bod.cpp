@@ -250,6 +250,50 @@ Priamka Priamka::getOsUhla(const Priamka &other) const {
     return Priamka();
 }
 
+bool Priamka::leziNaPriamke(const Bod &other) const {
+    //p:AB  Ce(p:AB)
+    //2x+3y+2=0 //ax+by+2=0 //ak a,b su nasobky 2 alebo 3 tak bude lineárne závislá, teda budu rovnobezne// n1=k*n2// k=n1/n2
+    /*Bod other;
+    if(other>=this->X && other<=this->Y)
+    {
+        return true;
+    }
+    if(other<=this->X && other>=this->Y)
+    {
+        return true;
+    }
+    return false;*///0 jhe vždy false, všetko ostatné true
+    VR vPriamka(*this);
+    return vPriamka[0] * other.getX() + vPriamka[1] *other.getY() + vPriamka[2] == 0;
+}
+
+bool Priamka::jeRovnobezna(const Priamka &other) const {
+    //zistime tak či je normalovy vektor prvej a smerovy vektor druhej na seba kolme
+    /*Bod K = getNormalovy(other);
+    Bod J = getsmerovy(this);
+    if(K=){
+        return true;
+    }
+    return false;*/
+
+    std::ostream  &operator<<(std::ostream &os, const PR &other)
+    {
+        os << "Parametricka rovnica:" <<std::endl <<"x = " << setw(4) ;//...
+        return os;
+    }
+}
+
+bool Priamka::operator==(const Priamka &other) const {
+    //totoznost//1.ci su rovnobezne// 2 ci bod z druhej lezi na prvej
+    if(this->Priamka= jeRovnobezna(other))
+    {
+        if(other= leziNaPriamke(this->X)){
+            return true;
+        }
+    }
+    return false;
+}
+
 //Je potrebné optimalozovať program tak aby sa funkcia vyvolávala čo najmenej krát
 PR::PR(Bod A, Bod B) : Priamka(A, B) {
     setKoeficienty();

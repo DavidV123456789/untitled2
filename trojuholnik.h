@@ -46,6 +46,7 @@ public:
     float operator*(const Bod & other) const;//skalarny sucin vektorov
     bool operator<(const Bod & other);
     bool operator>(const Bod & other);
+
     Bod operator^(const Bod & other) const; //pretazeny operator strieska na vypocet stredu usecky
     explicit operator float() const;  //pretazeny operator konverzie na float, ktory vrati vzdialenost od [0,0]
     //inicializacia generatorov cisel
@@ -75,6 +76,9 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Priamka & other);
     Bod getStred() const;
     float  getDlzka() const;
+    bool leziNaPriamke(const Bod & other) const;
+    bool jeRovnobezna(const Priamka & other) const;
+    bool operator==(const Priamka & other) const;
     virtual Vektor getsmerovy() const;
     virtual Vektor getNormalovy() const;//kolmý vektor na smerový
     Priamka getOsStrany() const;
