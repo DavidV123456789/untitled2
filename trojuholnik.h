@@ -70,6 +70,26 @@ protected:
     Bod Y;//aby jej dedicne triedy mohli pouzivat tuto vlastnost
 public:
     //
+    class Priesecnik
+    {
+    private:
+        Bod P;
+        char popis[11];
+    public:
+        Priesecnik():P({0,0}),popis(" "){};
+        Priesecnik(const Bod &R, const char * msg);
+        Bod getBodPriesecnika()const;
+        char * getpopisPriesecnika() const;
+        friend std::ostream  & operator<<(std::ostream & os, const Priesecnik &other);
+        /*
+         D= a1b2-a2b1
+         D1= c1b2-c2b1
+         D2= a1c2-a2c1
+         x=D1/D
+         y=D2/D
+         */
+    };
+    //
     Priamka(){};//Priamka():X({0 , 0}),Y({0,0}){};-funguje bez toho
     explicit Priamka(Bod Z):X(Z),Y(Z){};
     Priamka(Bod Z, Bod W):X(Z),Y(W){};

@@ -331,3 +331,25 @@ Vektor PR::getsmerovy() const {
 VR::VR(Bod A, Bod B) : Priamka(A, B) {
 
 }
+
+std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
+    return <#initializer#>;
+}
+
+char *Priamka::Priesecnik::getpopisPriesecnika() const {
+    std::strncpy(popis, msg, 10);
+    popis[10]='\0';
+}
+
+Bod Priamka::Priesecnik::getBodPriesecnika() const {
+    float D= ;
+    float D1= ;
+    float D2= ;
+    float a= D1/D;
+    float b= D2/D;
+    return ;
+}
+
+Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
+
+}
