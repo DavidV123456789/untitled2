@@ -135,6 +135,7 @@ private:
 public:
     VR():koeficienty{0,0,0}{};
     VR(Bod A, Bod B);
+
     //dorob...
 };
 #endif //UNTITLED2_TROJUHOLNIK_H

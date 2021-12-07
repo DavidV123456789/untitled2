@@ -330,7 +330,7 @@ Vektor PR::getsmerovy() const {
 
 
 VR::VR(Bod A, Bod B) : Priamka(A, B) {
-
+    return ;
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
@@ -355,6 +355,7 @@ Bod Priamka::Priesecnik::getBodPriesecnika() const {
     float b=D2/D;
     Bod P(a, b);
     return P;
+    //dorob...
 }
 
 Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
