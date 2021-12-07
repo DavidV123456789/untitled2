@@ -82,6 +82,11 @@ public:
         char * getpopisPriesecnika() const;
         friend std::ostream  & operator<<(std::ostream & os, const Priesecnik &other);
         /*
+         D->Determinanti
+         I a1 b1 I c1 I
+         I a2 b2 I c2 I
+         //a2+b1 = -c2 // vzhľadom na všeobcnú rovnicu priamky
+
          D= a1b2-a2b1
          D1= c1b2-c2b1
          D2= a1c2-a2c1

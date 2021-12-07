@@ -212,7 +212,8 @@ float Bod::operator*(const Bod &other) const {
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka &other) {
-    return 0;
+    os<<"Bod_A["<<other.X<<"];Bod_B["<<other.Y<<"]"<<std::endl;
+    return os;
 }
 
 Bod Priamka::getStred() const {//refaktorovanie, pri zmene názvu funkcie zmení názov danej funkcie v celom kóde
@@ -285,7 +286,7 @@ bool Priamka::jeRovnobezna(const Priamka &other) const {
 
 bool Priamka::operator==(const Priamka &other) const {
     //totoznost//1.ci su rovnobezne// 2 ci bod z druhej lezi na prvej
-    if(this->Priamka= jeRovnobezna(other))
+    if(this= jeRovnobezna(other))
     {
         if(other= leziNaPriamke(this->X)){
             return true;
