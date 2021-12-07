@@ -333,23 +333,30 @@ VR::VR(Bod A, Bod B) : Priamka(A, B) {
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
-    return <#initializer#>;
+    os<<"Priamky su"<<other.popis;
+    if(std::strcmp(other.popis,"rovnobezne")==0)
+    {
+        os<<" a ich presecnik je"<<other.P;
+    }
+    return os;
 }
 
 char *Priamka::Priesecnik::getpopisPriesecnika() const {
-    std::strncpy(popis, msg, 10);
-    popis[10]='\0';
+
 }
 
 Bod Priamka::Priesecnik::getBodPriesecnika() const {
-    float D= ;
-    float D1= ;
-    float D2= ;
-    float a= D1/D;
-    float b= D2/D;
-    return ;
+
+    float D= * - * ;
+    float D1= * - * ;
+    float D2= * - * ;
+    float a=D1/D;
+    float b=D2/D;
+    Bod P(a, b);
+    return P;
 }
 
 Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
-
+    std::strncpy(popis, msg, 10);
+    popis[10]='\0';
 }
