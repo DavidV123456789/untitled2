@@ -197,12 +197,12 @@ float Bod::generujFloat(float min, float max)
     return dis(gen) ;
 }
 
-float Bod::getX() {
-    return 0;
+float Bod::getX() const{
+    return x;
 }
 
-float Bod::getY() {
-    return 0;
+float Bod::getY() const{
+    return y;
 }
 
 float Bod::operator*(const Bod &other) const {
@@ -242,9 +242,15 @@ Priamka Priamka::getOsStrany() const {
 }
 
 float Priamka::getUhol(const Priamka &other, char vrat) const {
-    //dorob...
+    Vektor smerovy1= getsmerovy();
+    Vektor smerovy2 = other.getsmerovy();
 
-    return 0;
+    if(this->jeRovnobezna(other))
+    {
+        return 0;
+    }
+    float uhol =std::acos((smerovy1*smerovy2)/(smerovy1.getDistance()*smerovy2.getDistance()));
+    return  vrat  == 'r' ? static_cast<float>(uhol) : static_cast<float>(180/3.14159265358)*uhol;//pretypovanie:(float) uhol;(float)// správne by malo byť:static_cast<float>(uhol);static_cast<float>
 }
 
 Priamka Priamka::getOsUhla(const Priamka &other) const {
@@ -264,7 +270,7 @@ bool Priamka::leziNaPriamke(const Bod &other) const {
         return true;
     }
     return false;*///0 jhe vždy false, všetko ostatné true
-    VR vPriamka(*this);
+    Priamka vPriamka(*this);
     return vPriamka[0] * other.getX() + vPriamka[1] *other.getY() + vPriamka[2] == 0;
 }
 
@@ -276,23 +282,16 @@ bool Priamka::jeRovnobezna(const Priamka &other) const {
         return true;
     }
     return false;*/
-
-    std::ostream  &operator<<(std::ostream &os, const PR &other)
-    {
-        os << "Parametricka rovnica:" <<std::endl <<"x = " << setw(4) ;//...
-        return os;
-    }
 }
+/*std::ostream  &operator<<(std::ostream &os, const PR &other)
+{
+    using namespace beta;
+    os << "Parametricka rovnica:" <<std::endl <<"x = " << setw(4) ;//...
+    return os;
+}*/
 
 bool Priamka::operator==(const Priamka &other) const {
-    //totoznost//1.ci su rovnobezne// 2 ci bod z druhej lezi na prvej
-    if(this= jeRovnobezna(other))
-    {
-        if(other= leziNaPriamke(this->X)){
-            return true;
-        }
-    }
-    return false;
+    return ((jeRovnobezna(other))&&(leziNaPriamke(other.Y)));
 }
 
 //Je potrebné optimalozovať program tak aby sa funkcia vyvolávala čo najmenej krát
@@ -330,10 +329,11 @@ Vektor PR::getsmerovy() const {
 
 
 VR::VR(Bod A, Bod B) : Priamka(A, B) {
-    return ;
+    return  ;
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
+
     os<<"Priamky su"<<other.popis;
     if(std::strcmp(other.popis,"rovnobezne")==0)
     {
@@ -343,10 +343,22 @@ std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
 }
 
 char *Priamka::Priesecnik::getpopisPriesecnika() const {
-
+    cout<<"P["<<P.getX()<<";"<<P.getY()<<"]"<<std::endl;
 }
 
 Bod Priamka::Priesecnik::getBodPriesecnika() const {
+/*
+         D->Determinanti
+         I a1 b1 I c1 I
+         I a2 b2 I c2 I
+         //a2+b1 = -c2 // vzhľadom na všeobcnú rovnicu priamky
+
+         D= a1b2-a2b1
+         D1= c1b2-c2b1
+         D2= a1c2-a2c1
+         x=D1/D
+         y=D2/D
+         */
 
     float D= * - * ;
     float D1= * - * ;

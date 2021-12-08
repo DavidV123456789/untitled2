@@ -35,8 +35,8 @@ public:
     Bod(float a,float b):x(a),y(b){};
     float getDistance(const Bod & other = Bod(0,0) ) const;
 
-    float getX();
-    float getY();
+    float getX() const;
+    float getY() const;
 
     Bod getCenter(const Bod & other) const;
     Bod operator+(const Bod & other) const;
@@ -109,7 +109,7 @@ public:
     Priamka getOsStrany() const;
     Priamka getOsUhla(const Priamka & other) const;
     float getUhol(const Priamka & other, char vrat='s') const;
-
+    //jednotkovy vektor sa pocita:s->[s1;s2]    //s1->[(s1/IsI);(s2/IsI)]   //I I- absolutna hodnota
 
 };
 
