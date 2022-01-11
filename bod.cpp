@@ -342,6 +342,19 @@ std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
     return os;
 }
 
+Priamka::Priamka(Bod A) {
+
+}
+
+Priamka::Priamka(Bod A, Bod B):X(A),Y(B) {
+try{
+    if(A==B)
+    {
+        throw MsgError("");
+    }
+}
+}
+
 char *Priamka::Priesecnik::getpopisPriesecnika() const {
     cout<<"P["<<P.getX()<<";"<<P.getY()<<"]"<<std::endl;
 }
@@ -373,4 +386,69 @@ Bod Priamka::Priesecnik::getBodPriesecnika() const {
 Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
     std::strncpy(popis, msg, 10);
     popis[10]='\0';
+}
+
+
+
+Trojuholnik::Trojuholnik(Priamka a, Priamka b, Priamka c) {
+
+}
+
+Trojuholnik::Trojuholnik(Bod A1, Bod B1, Bod C1) {
+
+}
+
+bool Trojuholnik::exustuje() const {
+    float v=A.getDistance(B);
+    float w=B.getDistance(C);
+    float z=A.getDistance(C);
+
+    if(v>w+z)
+    {
+        MsgError("Nie je trojuholnik");
+        return 1;
+    }
+    else if(w>=v+z)
+    {
+        MsgError("Nie je trojuholnik");
+        return 1;
+    }
+    else if(z>=w+v)
+    {
+        MsgError("Nie je trojuholnik");
+        return 1;
+    }
+    else
+    {
+        std::cout<<"Je trojuholnik";
+    }
+    /*if(v>=w)
+    {
+        if(w>=z)
+        {
+            if(v<=w+z)
+            {
+                return ;
+            }
+            else
+            {
+                MsgError("Nie je trojuholnik");
+            }
+        }
+        else
+        {
+
+        }
+    }
+    else
+    {
+        if(v>=z)
+        {
+
+        }
+        else
+        {
+
+        }
+    }  */
 }

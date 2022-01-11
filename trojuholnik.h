@@ -95,9 +95,9 @@ public:
          */
     };
     //
-    Priamka(){};//Priamka():X({0 , 0}),Y({0,0}){};-funguje bez toho
-    explicit Priamka(Bod Z):X(Z),Y(Z){};
-    Priamka(Bod Z, Bod W):X(Z),Y(W){};
+    Priamka(){X ={0,0},Y ={1,0};};//Priamka():X({0 , 0}),Y({0,0}){};-funguje bez toho
+    explicit Priamka(Bod A);
+    Priamka(Bod A, Bod B);
     friend std::ostream &operator<<(std::ostream &os, const Priamka & other);
     Bod getStred() const;
     float  getDlzka() const;
@@ -132,10 +132,37 @@ public:
 class VR: public Priamka{
 private:
     float koeficienty[3];
+    static int p;
 public:
-    VR():koeficienty{0,0,0}{};
+    VR();
     VR(Bod A, Bod B);
+    VR(float a, float  b, float  c);
+    explicit VR(const Priamka & P);
 
     //dorob...
+
+
+};
+
+class MsgError :public std::exception
+{
+private:
+    const char * msg;
+public:
+    explicit  MsgError(const char * sprava):msg(sprava){};
+    const char * what() const noexcept override {return msg;};
+};
+
+class  Trojuholnik
+{
+private:
+    Bod A;
+    Bod B;
+    Bod C;
+public:
+    Trojuholnik():A{-1,0},B{1,0},C{0,1}{};
+    Trojuholnik(Bod A1, Bod B1, Bod C1);
+    Trojuholnik(Priamka a, Priamka b, Priamka c);
+    bool exustuje() const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H
