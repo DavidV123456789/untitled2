@@ -81,8 +81,11 @@ void Bod::utriedPoleBodov(Bod *pole, int n) {
     qsort((Bod *)pole,n,sizeof(getDistance),cmp);
 }
 */
+#include <cstring>
 #include <cmath>
 #include <random>
+
+int VR::p = -10;
 
 float Bod::getDistance(const Bod &other) const
 {
@@ -197,19 +200,21 @@ float Bod::generujFloat(float min, float max)
     return dis(gen) ;
 }
 
-float Bod::getX() const{
-    return x;
-}
 
-float Bod::getY() const{
-    return y;
-}
 
 float Bod::operator*(const Bod &other) const {
-    //nejsom si isty co presne tu ma byt
-    //dorob...
-    return 0;
+    return x * other.x + y * other.y;
 }
+
+Bod Bod::getJednotkovy() const {
+    //std::cout<<this->getDistance()<<std::endl;
+    return {this->x / this->getDistance(), this->y / this->getDistance()};
+}
+
+bool Bod::operator==(const Bod &other) {
+    return (x==other.x && y==other.y);
+}
+
 
 std::ostream &operator<<(std::ostream &os, const Priamka &other) {
     os<<"Bod_A["<<other.X<<"];Bod_B["<<other.Y<<"]"<<std::endl;
@@ -225,13 +230,13 @@ float Priamka::getDlzka() const {
     return X.getDistance(Y);
 }
 
-Vektor Priamka::getsmerovy() const {
+Vektor Priamka::getSmerovy() const {
 
     return Y-X;
 }
 
 Vektor Priamka::getNormalovy() const {
-    Vektor smerovy = getsmerovy();
+    Vektor smerovy = getSmerovy();
     return { smerovy.getY()*(-1), smerovy.getX() };
     //getery?
 }
@@ -242,8 +247,8 @@ Priamka Priamka::getOsStrany() const {
 }
 
 float Priamka::getUhol(const Priamka &other, char vrat) const {
-    Vektor smerovy1= getsmerovy();
-    Vektor smerovy2 = other.getsmerovy();
+    Vektor smerovy1= getSmerovy();
+    Vektor smerovy2 = other.getSmerovy();
 
     if(this->jeRovnobezna(other))
     {
@@ -270,25 +275,22 @@ bool Priamka::leziNaPriamke(const Bod &other) const {
         return true;
     }
     return false;*///0 jhe vždy false, všetko ostatné true
-    Priamka vPriamka(*this);
-    return vPriamka[0] * other.getX() + vPriamka[1] *other.getY() + vPriamka[2] == 0;
+    VR vPriamka(*this);
+    return vPriamka[0] * other.getX() + vPriamka[1] * other.getY() + vPriamka[2] == 0;
 }
 
 bool Priamka::jeRovnobezna(const Priamka &other) const {
     //zistime tak či je normalovy vektor prvej a smerovy vektor druhej na seba kolme
-    /*Bod K = getNormalovy(other);
-    Bod J = getsmerovy(this);
-    if(K=){
-        return true;
-    }
-    return false;*/
+    return getSmerovy() * other.getNormalovy() == 0;
 }
-/*std::ostream  &operator<<(std::ostream &os, const PR &other)
+std::ostream  &operator<<(std::ostream &os, const PR &other)
 {
     using namespace beta;
-    os << "Parametricka rovnica:" <<std::endl <<"x = " << setw(4) ;//...
+    os << "Parametricka rovnica:" << std::endl << "x = " << setw(4) << std::noshowpos << other[0] << std::showpos
+       << setw(4) << other[1] << "*t" << std::endl << "y = " << setw(4) << std::noshowpos << other[2] << std::showpos
+       << setw(4) << other[3] << "*t" << "   t je z R" << std::noshowpos << std::endl;
     return os;
-}*/
+}
 
 bool Priamka::operator==(const Priamka &other) const {
     return ((jeRovnobezna(other))&&(leziNaPriamke(other.Y)));
@@ -304,7 +306,7 @@ PR::PR(const Priamka &P):Priamka(P) {
 }
 
 void PR::setKoeficienty() {
-    Vektor smerovy=Priamka::getsmerovy();//dôvod prečo Priamka:: pred tým getsmerovy je z dôvodu lebo je to virtualna v dedicovi premenena metoda
+    Vektor smerovy=Priamka::getSmerovy();//dôvod prečo Priamka:: pred tým getsmerovy je z dôvodu lebo je to virtualna v dedicovi premenena metoda
     koeficienty[0]=X.getX();
     koeficienty[1]=smerovy.getX();
     koeficienty[2]=X.getY();
@@ -316,20 +318,73 @@ float *PR::getKoeficienty() {
     return koeficienty;
 }
 
-std::ostream &operator<<(std::ostream &os, const PR &other) {
-    cout<<"Parametricka rovnica:"<<std::endl;
-    cout<<std::showpos<<"x= "<<other.koeficienty[0]<<"+"<<other.koeficienty[2]<<"*t"<<std::noshowpos<<std::endl;
-    cout<<std::showpos<<"y= "<<other.koeficienty[1]<<"+"<<other.koeficienty[3]<<"*t       ;t je z R"<<std::noshowpos<<std::endl;
-    //showpos nám zapričinuje ukazovanie + pred kladnými cislami
+
+
+Vektor PR::getSmerovy() const {
+    return Vektor();
 }
 
-Vektor PR::getsmerovy() const {
-    return {koeficienty[1], koeficienty[3]};
-}
+
 
 
 VR::VR(Bod A, Bod B) : Priamka(A, B) {
-    return  ;
+    setKoeficienty();
+}
+
+VR::VR() {
+    setKoeficienty();
+}
+
+VR::VR(float a, float b, float c) {
+    try
+    {
+        if (a == 0 && b==0)
+        {
+            throw ("Takato priamka neexistuje! Bola vytvorena implicitna priamka ktora je osou x");
+        }
+        X = vypocitajBod(a, b, c);
+        Y = vypocitajBod(a, b, c);
+        koeficienty[0] = a;
+        koeficienty[1] = b;
+        koeficienty[2] = c;
+    }
+    catch (const char * ex)
+    {
+        std::cout << ex;
+        koeficienty[0] = 0;
+        koeficienty[1] = 1;
+        koeficienty[2] = 0;
+    }
+}
+
+VR::VR(const Priamka &P) {
+    setKoeficienty();
+}
+
+std::ostream &operator<<(std::ostream &os, const VR &other) {
+    using namespace beta;
+    os << "Vseobecna rovnica:" << setw(4) << setprecision(2) << other[0] << "x" << std::showpos << setw(4) << other[1]
+       << "y" << std::showpos << setw(4) << other[2] << " = 0" << endl;
+    return os;
+}
+
+float *VR::getKoeficienty() {
+    return koeficienty;
+}
+
+Vektor VR::getNormalovy() const {
+    return Priamka::getNormalovy();
+}
+
+void VR::setKoeficienty() {
+    Vektor normalovy = Priamka::getNormalovy();
+    koeficienty[0] = normalovy.getX();
+    koeficienty[1] = normalovy.getY();
+    koeficienty[2] = -(koeficienty[0] * X.getX() + koeficienty[1] * X.getY());
+}
+
+Bod VR::vypocitajBod(float a, float b, float c) const {
+    return Bod();
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
@@ -343,24 +398,39 @@ std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
 }
 
 Priamka::Priamka(Bod A) {
-
+    std::cout<<"Jeden bod neurcuje priamku. Bola vytvorena implicitna priamka iduca tymto bodom rovnobezna s osou x\n";
+    X=A;
+    Y={A.getX()+1,A.getY()};
 }
 
-Priamka::Priamka(Bod A, Bod B):X(A),Y(B) {
-try{
-    if(A==B)
+Priamka::Priamka(Bod A, Bod B) {
+    try
     {
-        throw MsgError("");
+        if(A==B)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        X=A;
+        Y=B;
+    }
+    catch (const char * msg)
+    {
+        std::cout<<msg;
+        X={0,0};
+        Y={1,0};
     }
 }
+
+Priamka::Priesecnik Priamka::getPoloha(const Priamka &other) const {
+    return Priamka::Priesecnik();
 }
 
 char *Priamka::Priesecnik::getpopisPriesecnika() const {
     cout<<"P["<<P.getX()<<";"<<P.getY()<<"]"<<std::endl;
 }
 
-Bod Priamka::Priesecnik::getBodPriesecnika() const {
-/*
+/*Bod Priamka::Priesecnik::getBodPriesecnika() const {
+
          D->Determinanti
          I a1 b1 I c1 I
          I a2 b2 I c2 I
@@ -371,7 +441,7 @@ Bod Priamka::Priesecnik::getBodPriesecnika() const {
          D2= a1c2-a2c1
          x=D1/D
          y=D2/D
-         */
+
 
     float D= * - * ;
     float D1= * - * ;
@@ -381,7 +451,7 @@ Bod Priamka::Priesecnik::getBodPriesecnika() const {
     Bod P(a, b);
     return P;
     //dorob...
-}
+}*/
 
 Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
     std::strncpy(popis, msg, 10);
@@ -403,24 +473,28 @@ bool Trojuholnik::exustuje() const {
     float w=B.getDistance(C);
     float z=A.getDistance(C);
 
+
+
+
     if(v>w+z)
     {
         MsgError("Nie je trojuholnik");
-        return 1;
+        return false;
     }
     else if(w>=v+z)
     {
         MsgError("Nie je trojuholnik");
-        return 1;
+        return false;
     }
     else if(z>=w+v)
     {
         MsgError("Nie je trojuholnik");
-        return 1;
+        return false;
     }
     else
     {
         std::cout<<"Je trojuholnik";
+        return true;
     }
     /*if(v>=w)
     {
@@ -451,4 +525,77 @@ bool Trojuholnik::exustuje() const {
 
         }
     }  */
+}
+
+float Trojuholnik::getVelkostStrany(char strana) const {
+
+    if(strana=='a')
+    {
+        float a=B.getDistance(C);
+        return a;
+    }
+    else if(strana=='b')
+    {
+        float b=A.getDistance(C);
+        return b;
+    }
+    else if(strana=='c')
+    {
+        float c=A.getDistance(B);
+        return c;
+    }
+
+}
+
+float Trojuholnik::getVelkostUhla(char uhol) const {
+    if(uhol=='a')
+    {
+        Priamka b(A,C);
+        Priamka c(A,B);
+        float alpha;
+        return alpha;
+    }
+    else if(uhol=='b')
+    {
+        Priamka a(B,C);
+        Priamka c(A,B);
+        float beta;
+        return beta;
+    }
+    else if(uhol=='c')
+    {
+        Priamka a(B,C);
+        Priamka b(A,C);
+        float gama;
+        return gama;
+    }
+    //dorob................
+}
+
+float Trojuholnik::getObvod() const {
+    float obvod= getVelkostStrany('a')+getVelkostStrany('b')+getVelkostStrany('c');
+    return obvod;
+}
+
+float Trojuholnik::getObsah() const {
+    float S= (getVelkostStrany('a')+getVelkostStrany('b')+getVelkostStrany('c'))/2;
+    return S;
+}
+
+void Trojuholnik::vypisStrany() const {
+    cout<<"Strana a= "<<getVelkostStrany('a')<<endl;
+    cout<<"Strana b= "<<getVelkostStrany('b')<<endl;
+    cout<<"Strana c= "<<getVelkostStrany('c')<<endl;
+}
+
+void Trojuholnik::vypisUhly() const {
+    cout<<"Uhol alpha="<<getVelkostUhla('a')<<endl;
+    cout<<"Uhol beta="<<getVelkostUhla('b')<<endl;
+    cout<<"Uhol gama="<<getVelkostUhla('c')<<endl;
+
+
+}
+
+Bod Trojuholnik::getOrtocentrum() const {
+    return Bod();
 }

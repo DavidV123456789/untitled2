@@ -35,14 +35,16 @@ public:
     Bod(float a,float b):x(a),y(b){};
     float getDistance(const Bod & other = Bod(0,0) ) const;
 
-    float getX() const;
-    float getY() const;
+    float getX() const{return x;}
+    float getY() const{return y;}
+    Bod getJednotkovy() const;
 
     Bod getCenter(const Bod & other) const;
     Bod operator+(const Bod & other) const;
     Bod operator-(const Bod & other) const;
     Bod operator/(float k) const;
     Bod operator*(float k) const;
+    bool operator==(const Bod & other);
     float operator*(const Bod & other) const;//skalarny sucin vektorov
     bool operator<(const Bod & other);
     bool operator>(const Bod & other);
@@ -78,7 +80,7 @@ public:
     public:
         Priesecnik():P({0,0}),popis(" "){};
         Priesecnik(const Bod &R, const char * msg);
-        Bod getBodPriesecnika()const;
+        Bod getBodPriesecnika()const{return P;};
         char * getpopisPriesecnika() const;
         friend std::ostream  & operator<<(std::ostream & os, const Priesecnik &other);
         /*
@@ -104,8 +106,9 @@ public:
     bool leziNaPriamke(const Bod & other) const;
     bool jeRovnobezna(const Priamka & other) const;
     bool operator==(const Priamka & other) const;
-    virtual Vektor getsmerovy() const;
+    virtual Vektor getSmerovy() const;
     virtual Vektor getNormalovy() const;//kolmý vektor na smerový
+    Priesecnik getPoloha(const Priamka & other) const;
     Priamka getOsStrany() const;
     Priamka getOsUhla(const Priamka & other) const;
     float getUhol(const Priamka & other, char vrat='s') const;
@@ -124,8 +127,9 @@ public:
     const float & operator [](int index) const{return koeficienty[index];};// pretazeny opertor [] pre konstantny pristup
     friend  std::ostream  & operator<<(std::ostream & os, const PR & other);
     float * getKoeficienty();//vrati pole koeficientov
+    Vektor getSmerovy()  const override;
     void setKoeficienty();//nastavi koeficienty v parametrckej rovnici na spravne hodnoty
-    virtual Vektor getsmerovy() const;
+
 };
 
 //všeobecná rovnica
@@ -138,8 +142,14 @@ public:
     VR(Bod A, Bod B);
     VR(float a, float  b, float  c);
     explicit VR(const Priamka & P);
+    float &operator [](int index) {return koeficienty[index];} //pretazeny operator [] pre nekonstanty pristup
+    const float & operator [](int index) const {return koeficienty[index];} //pretazeny operator [] pre konstanty pristup
+    friend std::ostream & operator<<(std::ostream & os,const VR & other);
+    float * getKoeficienty();  //vrati pole koeficientov
+    Vektor getNormalovy() const override;
+    void setKoeficienty(); //nastavi koeficienty vo vseobecnej rovnici na spravne hodnoty vypocitane podla bodov
+    Bod vypocitajBod(float a, float b,float c) const; //na zaklade zadanych koeficientov a.b.priamkyc vypocita body
 
-    //dorob...
 
 
 };
@@ -164,5 +174,12 @@ public:
     Trojuholnik(Bod A1, Bod B1, Bod C1);
     Trojuholnik(Priamka a, Priamka b, Priamka c);
     bool exustuje() const;
+    float getVelkostStrany(char strana='a') const;
+    float getVelkostUhla(char uhol='a') const; //a=alfa. b=beta, c=gama
+    float getObvod() const;
+    float getObsah() const;//využijeme Herónov vzorec
+    void vypisStrany() const;//vypis velkosti stran troj.
+    void vypisUhly() const;//vypiser velkosti uhlov trojuholnika
+    Bod getOrtocentrum() const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H

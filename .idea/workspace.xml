@@ -12,6 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8db2dda7-2bf2-4344-8428-076d2c771ed2" name="Changes" comment="j">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bod.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/bod.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trojuholnik.h" beforeDir="false" afterPath="$PROJECT_DIR$/trojuholnik.h" afterDir="false" />
     </list>
@@ -58,11 +59,6 @@
     <property name="settings.editor.selected.configurable" value="http.certificates" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="untitled2" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="untitled2" TARGET_NAME="untitled2" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="untitled2" RUN_TARGET_NAME="untitled2">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -92,7 +88,9 @@
       <workItem from="1638781702182" duration="1745000" />
       <workItem from="1638876461598" duration="2859000" />
       <workItem from="1638947031178" duration="2483000" />
-      <workItem from="1641900914847" duration="2172000" />
+      <workItem from="1641900914847" duration="2395000" />
+      <workItem from="1641970997044" duration="2509000" />
+      <workItem from="1642413023913" duration="2162000" />
     </task>
     <task id="LOCAL-00001" summary="j">
       <created>1637064671760</created>
@@ -178,7 +176,21 @@
       <option name="project" value="LOCAL" />
       <updated>1638949449202</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="j">
+      <created>1641903254380</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1641903254380</updated>
+    </task>
+    <task id="LOCAL-00014" summary="j">
+      <created>1641903261859</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1641903261859</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
