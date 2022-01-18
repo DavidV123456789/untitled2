@@ -605,11 +605,37 @@ void Trojuholnik::vypisUhly() const {
 }
 
 Bod Trojuholnik::getOrtocentrum() const {
-    return getVyska('a').getPoloha(getVyska('b')).getBodPriesecnika();
+    return getVyska('a').getPoloha(getVyska('b')).getBodPriesecnika();//zober jednu vysku, urč jej polohu s druhou vyskou a urč priesečník
 }
 
 Priamka Trojuholnik::getTeznica(char naStranu) const {
-    return Priamka();
+    Bod D;
+    Bod E
+    if(naStranu=='a')
+    {
+        Priamka a(B,C);
+        D=a.getStred();
+        E=A;
+
+    }
+    else if(naStranu=='b')
+    {
+        Priamka b(A,C);
+        D=b.getStred();
+        E=B;
+    }
+    else if(naStranu=='c')
+    {
+        Priamka c(A,B);
+        D=c.getStred();
+        E=C;
+    }
+    else
+    {
+        std::cout<<"Neznama strana";
+
+    }
+    return {D,E};
 }
 
 Priamka Trojuholnik::getVyska(char naStranu) const {
