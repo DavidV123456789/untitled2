@@ -181,5 +181,7 @@ public:
     void vypisStrany() const;//vypis velkosti stran troj.
     void vypisUhly() const;//vypiser velkosti uhlov trojuholnika
     Bod getOrtocentrum() const;
+    Priamka getVyska(char naStranu='a') const;
+    Priamka getTeznica(char naStranu='a') const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H

@@ -544,6 +544,10 @@ float Trojuholnik::getVelkostStrany(char strana) const {
         float c=A.getDistance(B);
         return c;
     }
+    else
+    {
+        std::cout<<"Neznama strana";
+    }
 
 }
 
@@ -552,24 +556,28 @@ float Trojuholnik::getVelkostUhla(char uhol) const {
     {
         Priamka b(A,C);
         Priamka c(A,B);
-        float alpha;
+        float alpha=b.getUhol(c);
         return alpha;
     }
     else if(uhol=='b')
     {
         Priamka a(B,C);
         Priamka c(A,B);
-        float beta;
+        float beta=a.getUhol(c);
         return beta;
     }
     else if(uhol=='c')
     {
         Priamka a(B,C);
         Priamka b(A,C);
-        float gama;
+        float gama=a.getUhol(b);
         return gama;
     }
-    //dorob................
+    else
+    {
+        std::cout<<"Neznamy uhol";
+    }
+
 }
 
 float Trojuholnik::getObvod() const {
@@ -583,19 +591,55 @@ float Trojuholnik::getObsah() const {
 }
 
 void Trojuholnik::vypisStrany() const {
-    cout<<"Strana a= "<<getVelkostStrany('a')<<endl;
-    cout<<"Strana b= "<<getVelkostStrany('b')<<endl;
-    cout<<"Strana c= "<<getVelkostStrany('c')<<endl;
+    std::cout<<"Strana a= "<<getVelkostStrany('a')<<endl;
+    std::cout<<"Strana b= "<<getVelkostStrany('b')<<endl;
+    std::cout<<"Strana c= "<<getVelkostStrany('c')<<endl;
 }
 
 void Trojuholnik::vypisUhly() const {
-    cout<<"Uhol alpha="<<getVelkostUhla('a')<<endl;
-    cout<<"Uhol beta="<<getVelkostUhla('b')<<endl;
-    cout<<"Uhol gama="<<getVelkostUhla('c')<<endl;
+    std::cout<<"Uhol alpha="<<getVelkostUhla('a')<<endl;
+    std::cout<<"Uhol beta="<<getVelkostUhla('b')<<endl;
+    std::cout<<"Uhol gama="<<getVelkostUhla('c')<<endl;
 
 
 }
 
 Bod Trojuholnik::getOrtocentrum() const {
-    return Bod();
+    return getVyska('a').getPoloha(getVyska('b')).getBodPriesecnika();
 }
+
+Priamka Trojuholnik::getTeznica(char naStranu) const {
+    return Priamka();
+}
+
+Priamka Trojuholnik::getVyska(char naStranu) const {
+    Bod Prvy;
+    Bod Druhy;
+    Bod normalovy;
+    if(naStranu=='a')
+    {
+        Bod normalovy = Priamka(B,C).getNormalovy();
+        Bod Prvy= A;
+        Bod Druhy = A+normalovy;
+    }
+    else if(naStranu=='b')
+    {
+        Bod normalovy = Priamka(A,C).getNormalovy();
+        Bod Prvy= B;
+        Bod Druhy = B+normalovy;
+    }
+    else if(naStranu=='c')
+    {
+        Bod normalovy = Priamka(A,B).getNormalovy();
+        Bod Prvy= C;
+        Bod Druhy = C+normalovy;
+    }
+    else
+    {
+        std::cout<<"Neznama strana";
+        Bod Prvy= Bod();
+        Bod Druhy = Bod();
+    }
+    return {Prvy,Druhy};
+}
+
