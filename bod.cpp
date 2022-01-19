@@ -666,7 +666,7 @@ void Trojuholnik::vypisOpisanaKruznica() const {
     Bod StredK= getOsStrany('a').getPoloha(getOsStrany('b')).getBodPriesecnika();
     float polomerK = StredK.getDistance(A);
     using namespace beta;
-    cout<<"(x "<<showpos<<StredK.getX()<<")^2 +"<<"(y"<<showpos<<StredK.getY()<<")^2 ="<<showpos<<polomerK*polomerK
+    cout<<"(x "<<showpos<<StredK.getX()<<")^2 +"<<"(y"<<showpos<<StredK.getY()<<")^2 ="<<showpos<<polomerK*polomerK;
 }
 
 Priamka Trojuholnik::getOsStrany(char naStranu) const {
