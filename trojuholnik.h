@@ -183,5 +183,7 @@ public:
     Bod getOrtocentrum() const;
     Priamka getVyska(char naStranu='a') const;
     Priamka getTeznica(char naStranu='a') const;
+    void vypisOpisanaKruznica() const;
+    Priamka getOsStrany(char naStranu='a') const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H

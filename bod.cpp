@@ -610,7 +610,7 @@ Bod Trojuholnik::getOrtocentrum() const {
 
 Priamka Trojuholnik::getTeznica(char naStranu) const {
     Bod D;
-    Bod E
+    Bod E;
     if(naStranu=='a')
     {
         Priamka a(B,C);
@@ -642,30 +642,159 @@ Priamka Trojuholnik::getVyska(char naStranu) const {
     Bod Prvy;
     Bod Druhy;
     Bod normalovy;
-    if(naStranu=='a')
-    {
-        Bod normalovy = Priamka(B,C).getNormalovy();
-        Bod Prvy= A;
-        Bod Druhy = A+normalovy;
-    }
-    else if(naStranu=='b')
-    {
-        Bod normalovy = Priamka(A,C).getNormalovy();
-        Bod Prvy= B;
-        Bod Druhy = B+normalovy;
-    }
-    else if(naStranu=='c')
-    {
-        Bod normalovy = Priamka(A,B).getNormalovy();
-        Bod Prvy= C;
-        Bod Druhy = C+normalovy;
-    }
-    else
-    {
-        std::cout<<"Neznama strana";
-        Bod Prvy= Bod();
+    if (naStranu == 'a') {
+        Bod normalovy = Priamka(B, C).getNormalovy();
+        Bod Prvy = A;
+        Bod Druhy = A + normalovy;
+    } else if (naStranu == 'b') {
+        Bod normalovy = Priamka(A, C).getNormalovy();
+        Bod Prvy = B;
+        Bod Druhy = B + normalovy;
+    } else if (naStranu == 'c') {
+        Bod normalovy = Priamka(A, B).getNormalovy();
+        Bod Prvy = C;
+        Bod Druhy = C + normalovy;
+    } else {
+        std::cout << "Neznama strana";
+        Bod Prvy = Bod();
         Bod Druhy = Bod();
     }
-    return {Prvy,Druhy};
+    return {Prvy, Druhy};
 }
 
+void Trojuholnik::vypisOpisanaKruznica() const {
+    Bod StredK= getOsStrany('a').getPoloha(getOsStrany('b')).getBodPriesecnika();
+    float polomerK = StredK.getDistance(A);
+    using namespace beta;
+    cout<<"(x "<<showpos<<StredK.getX()<<")^2 +"<<"(y"<<showpos<<StredK.getY()<<")^2 ="<<showpos<<polomerK*polomerK
+}
+
+Priamka Trojuholnik::getOsStrany(char naStranu) const {
+    Bod Stred;
+
+    Bod Druhy;// druhy bod na osi ako sucet stredu a smeroveho vektora osi
+    if (naStranu == 'a') {
+        Stred=Priamka(B,C).getStred();
+        Druhy = Stred+Priamka (B,C).getNormalovy();
+
+    }
+    else if (naStranu == 'b') {
+        Stred=Priamka(A,C).getStred();
+        Druhy = Stred+Priamka (A,C).getNormalovy();
+    }
+    else if (naStranu == 'c') {
+        Stred=Priamka(A,B).getStred();
+        Druhy = Stred+Priamka (A,B).getNormalovy();
+    }
+    else {
+        std::cout << "Neznama strana";
+
+    }
+    return Priamka{Stred,Druhy};
+}
+
+
+
+
+/*
+ * eni
+ * zwei
+ * drei
+ * vier
+ * funf
+ * sechst
+ * sieben
+ * acht
+ * neun
+ * zehn
+ * elf
+ * zwolf
+ * DREIZEHN
+ * VIERZEHN
+ * funfzehn
+ * sechszehn
+ * siebzehn
+ * achtzehn
+ * neunzehn
+ * zwanzig
+ * einundzwanzig
+ * zweiundzwanzig
+ * dreiundzwanzig
+ * vierundzwanzig
+ * funfundzwanzig
+ * sechsundzwanzig
+ * siebundzwanzig
+ * achtundzwanzig
+ * neunundzwanzig
+ * dreizig
+ * einunddreizig
+ * zweiunddreizig
+ * dreiunddreizig
+ * vierunddreizig
+ * funfunddreizig
+ * sechsunddreizig
+ * siebunddreizig
+ * achtunddreizig
+ * neununddreizig
+ * vierzig
+ * eindundvierzig
+ * zweiundvierzig
+ * dreiundvierzig
+ * vierundvierzig
+ * funfundvierzig
+ * sechsundviezig
+ * siebundviezig
+ * achtundvierzig
+ * neunundvierzig
+ * funfzig
+ * einundfunfzig
+ * zweiundfunfzig
+ * dreiundfunfzig
+ * vierundfunfzig
+ * funfundfunfzig
+ * sechsundfunfzig
+ * siebundfunfzig
+ * achtundfunfzig
+ * neunundfunfzig
+ * sechzig
+ * einundsechzig
+ * zweiundsechzig
+ * dreiundsechzig
+ * vierundsechzig
+ * funfundsechzig
+ * sechsundsechzig
+ * siebundsechzig
+ * achtundsechzig
+ * neunundsechzig
+ * siebzig
+ * einundsiebzig
+ * zweiundsiebzig
+ * dreiundsiebzig
+ * vierundsiebzig
+ * funfundsiebzig
+ * sechsundsiebzig
+ * siebundsiebzig
+ * achtundsiebzig
+ * neunundsiebzig
+ * achtzig
+ * einundachtzig
+ * zweiundachtzig
+ * dreiundachtzig
+ * vierundachtzig
+ * funfundachtzig
+ * sechsundachtzig
+ * siebundachtzig
+ * achtundachtzig
+ * neunundachtzig
+ * neunzig
+ * einundneunzig
+ * zweiundneunzig
+ * dreiundneunzig
+ * vierundneunzig
+ * funfundneunzig
+ * sechsundneunzig
+ * siebundneunzig
+ * achtundneunzig
+ * neunundneunzig
+ * ein hundert
+ */
