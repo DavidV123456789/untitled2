@@ -461,11 +461,33 @@ Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
 
 
 Trojuholnik::Trojuholnik(Priamka a, Priamka b, Priamka c) {
-
+    //dorob...
 }
 
 Trojuholnik::Trojuholnik(Bod A1, Bod B1, Bod C1) {
-
+    try
+    {
+        if(A1==B1)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        else if(A1==C1)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        else if(B1==C1)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        A=A1;
+        B=B1;
+        C=C1;
+    }
+    catch (const char * msg)
+    {
+        std::cout<<msg;
+        A={-1,0},B={1,0},C={0,1};
+    }
 }
 
 bool Trojuholnik::exustuje() const {
@@ -691,6 +713,10 @@ Priamka Trojuholnik::getOsStrany(char naStranu) const {
 
     }
     return Priamka{Stred,Druhy};
+}
+
+void Trojuholnik::vypisVpisanaKruznica() const {
+ Bod Pries=getosUhla
 }
 
 

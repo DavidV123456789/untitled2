@@ -185,5 +185,6 @@ public:
     Priamka getTeznica(char naStranu='a') const;
     void vypisOpisanaKruznica() const;
     Priamka getOsStrany(char naStranu='a') const;
+    void vypisVpisanaKruznica() const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H
