@@ -20,5 +20,6 @@ cout<<pCD;
 PR paCD(pCD);// vytvara parametricku rovnicu z obycajnej priamky
 cout<<paCD;*/
 ABC.vypisOpisanaKruznica();
+
     return 0;
 }

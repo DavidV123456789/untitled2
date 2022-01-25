@@ -259,7 +259,14 @@ float Priamka::getUhol(const Priamka &other, char vrat) const {
 }
 
 Priamka Priamka::getOsUhla(const Priamka &other) const {
-    return Priamka();
+    Bod prvyBod = this->getPoloha(other).getBodPriesecnika();
+    Vektor vektor1 = this->getSmerovy().getJednotkovy();
+    //std::cout<<"Smerovy "<<this->getSmerovy()<<" jednotkovy"<<vektor1<<std::endl;
+    Vektor vektor2 = other.getSmerovy().getJednotkovy();
+    //std::cout<<"Smerovy "<<other.getSmerovy()<<" jednotkovy"<<vektor2<<std::endl;
+    Bod druhyBod = vektor1 + vektor2 + prvyBod;
+    //std::cout<<druhyBod<<std::endl;
+    return {prvyBod, druhyBod};
 }
 
 bool Priamka::leziNaPriamke(const Bod &other) const {
@@ -461,7 +468,28 @@ Priamka::Priesecnik::Priesecnik(const Bod &R, const char *msg) {
 
 
 Trojuholnik::Trojuholnik(Priamka a, Priamka b, Priamka c) {
-    //dorob...
+    try {
+        A = c.getPoloha(b).getBodPriesecnika();
+        B = c.getPoloha(a).getBodPriesecnika();
+        C = a.getPoloha(b).getBodPriesecnika();
+        if(A==B)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        else if(A==C)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+        else if(C==B)
+        {
+            throw "Dva rovnake body neurcuju priamku! Vytvorila sa implicitna priamka.\n";
+        }
+    }
+    catch (const char * msg)
+    {
+        std::cout<<msg;
+        A={-1,0},B={1,0},C={0,1};
+    }
 }
 
 Trojuholnik::Trojuholnik(Bod A1, Bod B1, Bod C1) {
@@ -716,8 +744,35 @@ Priamka Trojuholnik::getOsStrany(char naStranu) const {
 }
 
 void Trojuholnik::vypisVpisanaKruznica() const {
- Bod Pries=getosUhla
+ Bod Pries= Priamka(B,A).getOsUhla(Priamka(B,C)).getPoloha(Priamka(C,B)).getBodPriesecnika();
+ /*Priamka kolmicaCezStred(stredKruznice,)
+  * dorob...
+  */
 }
+
+Priamka Trojuholnik::getOsUhla(char uhol) const {
+    Bod Prvy;
+    Bod Druhy;
+    if(uhol='a')
+    {
+        Priamka K1{B,A};
+        Prvy=A;
+        Druhy=K1.getSmerovy();
+    }
+    else if(uhol='b')
+    {
+        Prvy=B;
+
+    }
+    else if(uhol='c')
+    {
+        Prvy=C;
+
+    }
+    return Priamka{Prvy,Druhy};
+}
+
+
 
 
 
