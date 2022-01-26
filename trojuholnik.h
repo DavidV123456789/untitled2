@@ -187,7 +187,7 @@ public:
     Priamka getOsStrany(char naStranu='a') const;
     Priamka getOsUhla(char uhol='a') const;
     void vypisVpisanaKruznica() const;
-    //Oilerova priamka
-    //KruznicaDeviatichBodov
+   Priamka OilerovaP() const;
+    void vypisOpisKruzniceDeviatichBodov() const;
 };
 #endif //UNTITLED2_TROJUHOLNIK_H

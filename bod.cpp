@@ -328,7 +328,7 @@ float *PR::getKoeficienty() {
 
 
 Vektor PR::getSmerovy() const {
-    return Vektor();
+    return Y - X;
 }
 
 
@@ -391,7 +391,28 @@ void VR::setKoeficienty() {
 }
 
 Bod VR::vypocitajBod(float a, float b, float c) const {
-    return Bod();
+    ++p;
+    float intpart;
+    if (b != 0)
+    {
+        float vysledok = (-c - a * p) / b;
+        while (p < 10 && std::modf(vysledok, &intpart) != 0)
+        {
+            ++p;
+            //std::cout<<p<<" ";
+            vysledok = (-c - a * p) / b;
+        }
+        return Bod(p, vysledok);
+    } else
+    {
+        float vysledok = (-c - b * p) / a;
+        while (p < 10 && std::modf(vysledok, &intpart) != 0)
+        {
+            ++p;
+            vysledok = (-c - b * p) / a;;
+        }
+        return Bod(vysledok, p);
+    }
 }
 
 std::ostream &operator<<(std::ostream &os, const Priamka::Priesecnik &other) {
@@ -771,6 +792,38 @@ Priamka Trojuholnik::getOsUhla(char uhol) const {
     }
     return Priamka{Prvy,Druhy};
 }
+
+Priamka Trojuholnik::OilerovaP() const {
+   Bod P= getVyska('a').getPoloha(getVyska('b')).getBodPriesecnika();
+   Bod D= getTeznica('a').getPoloha(getTeznica('b')).getBodPriesecnika();
+    return Priamka{P,D};
+}
+
+void Trojuholnik::vypisOpisKruzniceDeviatichBodov() const {
+    Bod V=A.getCenter(B);
+    Bod W=A.getCenter(C);
+    Bod U=B.getCenter(C);
+    /*
+    Bod Stred;
+    Bod Druhy;
+
+        Stred=Priamka(W,U).getStred();
+        Druhy = Stred+Priamka (W,U).getNormalovy();
+    Priamka M(Stred,Druhy);
+        Stred=Priamka(W,V).getStred();
+        Druhy = Stred+Priamka (W,V).getNormalovy();
+    Priamka N(Stred,Druhy);
+    //
+    Bod StredK= M.getPoloha(N).getBodPriesecnika();
+    float polomerK = StredK.getDistance(V);
+    using namespace beta;
+    cout<<"(x "<<showpos<<(-1)*StredK.getX()<<")^2 +"<<"(y"<<showpos<<(-1)*StredK.getY()<<")^2 ="<<noshowpos<<polomerK*polomerK;
+*/
+    Trojuholnik VWU(V,W,U);
+    VWU.vypisOpisanaKruznica();
+     }
+
+
 
 
 
